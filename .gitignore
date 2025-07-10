@@ -1,0 +1,12 @@
+True.csv/
+False.csv/
+
+logs/
+results/
+bert_fake_news_model/
+
+fake_news_env/
+
+*.ipynb_checkpoints/
+
+wandb/
