@@ -1,5 +1,7 @@
 # Fake News vs Real News Classification
 
+One-page summary: open `poster.html` in a browser.
+
 ## Problem Statement
 
 In today's digital age, fake news spreads faster than wildfire. Social media platforms, news aggregators, and even traditional media outlets struggle to distinguish between legitimate journalism and fabricated content. This project tackles the critical challenge of automatically classifying news articles as either **REAL** or **FAKE** using machine learning techniques.
@@ -54,6 +56,8 @@ The goal was to build a robust system that can:
 | TF-IDF + Linear SVM | 99.0% | 99.0% | 99.0% | 99.0% | 0.999 |
 | BERT Fine-tuned | 100.0% | 100.0% | 100.0% | 100.0% | 1.000 |
 
+Logistic regression and the linear SVM already reach 99% on this split, and BERT reaches 100%. Real articles here are Reuters copy and fake articles come from other sites, so the two classes are separable by writing style even after the words FAKE and REAL were masked. These scores describe this corpus. They are not a measure of a general misinformation detector.
+
 ### Qualitative Analysis
 
 **Class Distribution:**
@@ -75,7 +79,7 @@ The goal was to build a robust system that can:
 ### Key Insights
 
 1. **Data Quality Matters**: Removing duplicates and handling data leakage was crucial for realistic performance evaluation
-2. **BERT Superiority**: Transformer-based models significantly outperformed traditional ML approaches
+2. **Small gap over the linear models**: BERT is one point above CountVectorizer and TF-IDF on this split, which were already at 99%
 3. **Feature Engineering**: Simple text combination (title + text) provided rich feature representation
 4. **Interpretability**: LIME explanations help understand model decisions for transparency
 
@@ -119,6 +123,10 @@ pip install lime wandb
 ```
 
 ### Model Loading & Prediction
+```bash
+fake_news_env\Scripts\python.exe predict.py "The central bank raised interest rates on Wednesday."
+```
+
 ```python
 from transformers import BertTokenizerFast, BertForSequenceClassification
 import torch
@@ -133,7 +141,7 @@ model = BertForSequenceClassification.from_pretrained(model_dir)
 
 ### Technical Insights
 1. **Data Leakage is Real**: Always check for target variable leakage in text data
-2. **BERT Dominance**: Transformer models significantly outperform traditional NLP approaches
+2. **Near-perfect scores need context**: On this Reuters-versus-other-sites corpus, a linear model was already enough
 3. **Deduplication Critical**: Removing duplicates prevents overfitting and ensures fair evaluation
 4. **Interpretability Matters**: LIME explanations build trust in model predictions
 

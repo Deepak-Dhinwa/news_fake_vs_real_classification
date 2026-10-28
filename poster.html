@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fake and Real News</title>
+<style>
+:root { --ink:#1c1915; --muted:#5c564c; --line:#d9d1c3; --paper:#f6f1e7; --card:#fffdf8; --accent:#3F3D56; }
+* { box-sizing:border-box; }
+body { margin:0; background:#e7e1d6; color:var(--ink); font-family:Georgia, "Iowan Old Style", serif; }
+.sheet { max-width:1100px; margin:28px auto; background:var(--paper); border:1px solid var(--line); }
+header { display:flex; justify-content:space-between; gap:24px; padding:28px 32px 18px; border-bottom:3px solid var(--accent); }
+h1 { font-size:34px; line-height:1.05; margin:0 0 8px; letter-spacing:-0.4px; }
+.claim { margin:0; font-family:"Segoe UI", sans-serif; font-size:16px; color:var(--muted); max-width:680px; }
+.kicker { font-family:"Segoe UI", sans-serif; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin:0 0 8px; }
+.tags { font-family:"Segoe UI", sans-serif; font-size:12px; text-align:right; color:var(--muted); }
+.tags span { display:inline-block; border:1px solid var(--line); padding:4px 8px; margin:0 0 6px 6px; background:var(--card); }
+.grid { display:grid; grid-template-columns:1.1fr 1fr 0.9fr; }
+section { padding:22px 24px 8px; border-right:1px solid var(--line); }
+section:last-child { border-right:0; }
+h2 { font-family:"Segoe UI", sans-serif; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; margin:0 0 10px; color:var(--accent); }
+p, li { font-family:"Segoe UI", sans-serif; font-size:14.5px; line-height:1.45; }
+ul { margin:0; padding-left:18px; }
+.stat { border-top:1px solid var(--line); padding:10px 0; }
+.stat b { display:block; font-size:26px; font-family:Georgia, serif; }
+.stat span { font-family:"Segoe UI", sans-serif; font-size:12px; color:var(--muted); }
+footer { display:flex; justify-content:space-between; gap:20px; padding:16px 32px 22px; border-top:1px solid var(--line); font-family:"Segoe UI", sans-serif; font-size:14px; }
+code { font-family:Consolas, monospace; background:var(--card); border:1px solid var(--line); padding:2px 6px; }
+@media (max-width:800px) { .grid { grid-template-columns:1fr; } section { border-right:0; border-bottom:1px solid var(--line); } header, footer { display:block; } .tags { text-align:left; margin-top:12px; } }
+</style>
+</head>
+<body>
+<article class="sheet">
+  <header>
+    <div>
+      <p class="kicker">Analysis</p>
+      <h1>Fake and Real News</h1>
+      <p class="claim">On this corpus the classes separate by house style. A linear model is already at 99%, so the perfect BERT score is not a general detector.</p>
+    </div>
+    <div class="tags"><span>44,898 articles</span><span>TF-IDF</span><span>BERT</span></div>
+  </header>
+  <div class="grid">
+    <section><h2>Question</h2><ul><li>Can the writing alone tell a Reuters wire from the fake-news half of this Kaggle set?</li><li>The words FAKE and REAL were masked so the label could not leak through.</li></ul></section>
+    <section><h2>Method</h2><ul><li>Count vectors and TF-IDF with linear classifiers.</li><li>A fine-tuned BERT on the same split.</li><li>LIME for the words a decision used.</li></ul></section>
+    <section><h2>Evidence</h2><div class="stat"><b>99%</b><span>linear models, accuracy and F1</span></div><div class="stat"><b>100%</b><span>BERT on this split</span></div><div class="stat"><b>0.999</b><span>linear ROC-AUC</span></div></section>
+  </div>
+  <footer>
+    <div><h2>What came out of it</h2><ul><li>Real copy is Reuters and the fake copy is from other sites, so style is a shortcut.</li><li>These numbers describe this dataset. They do not transfer to open-world misinformation.</li></ul></div>
+    <div><h2>Look at it</h2><p>Read the notebook, or run <code>predict.py</code> with the saved model for one article.</p></div>
+  </footer>
+</article>
+</body>
+</html>
