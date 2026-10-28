@@ -5,20 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fake and Real News</title>
 <style>
-:root { --ink:#1c1915; --muted:#5c564c; --line:#d9d1c3; --paper:#f6f1e7; --card:#fffdf8; --accent:#3F3D56; }
+
+:root { --ink:#1c1915; --muted:#5c564c; --line:#d9d1c3; --paper:#f6f1e7; --card:#fffdf8; --accent:#1E3A5F; }
 * { box-sizing:border-box; }
 body { margin:0; background:#e7e1d6; color:var(--ink); font-family:Georgia, "Iowan Old Style", serif; }
 .sheet { max-width:1180px; margin:28px auto; background:var(--paper); border:1px solid var(--line); }
-.band { display:grid; grid-template-columns:1.25fr 1fr 0.9fr; border-top:1px solid var(--line); }
-.band section { padding-bottom:18px; }
-header { display:flex; justify-content:space-between; gap:24px; padding:28px 32px 18px; border-bottom:3px solid var(--accent); }
+header { display:flex; justify-content:space-between; gap:24px; padding:26px 32px 16px; border-bottom:3px solid var(--accent); }
 h1 { font-size:34px; line-height:1.05; margin:0 0 8px; letter-spacing:-0.4px; }
-.claim { margin:0; font-family:"Segoe UI", sans-serif; font-size:16px; color:var(--muted); max-width:680px; }
+.claim { margin:0; font-family:"Segoe UI", sans-serif; font-size:16px; color:var(--muted); max-width:720px; }
 .kicker { font-family:"Segoe UI", sans-serif; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin:0 0 8px; }
 .tags { font-family:"Segoe UI", sans-serif; font-size:12px; text-align:right; color:var(--muted); }
 .tags span { display:inline-block; border:1px solid var(--line); padding:4px 8px; margin:0 0 6px 6px; background:var(--card); }
-.grid { display:grid; grid-template-columns:1.1fr 1fr 0.9fr; }
-section { padding:22px 24px 8px; border-right:1px solid var(--line); }
+.path { display:grid; grid-template-columns:repeat(4,1fr); list-style:none; margin:0; padding:0; border-bottom:1px solid var(--line); }
+.path li { padding:12px 16px 14px; border-right:1px solid var(--line); }
+.path li:last-child { border-right:0; }
+.path b { display:block; font-family:"Segoe UI", sans-serif; font-size:11px; letter-spacing:0.12em; color:var(--accent); margin-bottom:4px; }
+.path span { font-family:"Segoe UI", sans-serif; font-size:13.5px; line-height:1.35; }
+.grid, .band { display:grid; grid-template-columns:1.15fr 1fr 0.9fr; }
+.band { border-top:1px solid var(--line); }
+section { padding:18px 22px 8px; border-right:1px solid var(--line); }
 section:last-child { border-right:0; }
 h2 { font-family:"Segoe UI", sans-serif; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; margin:0 0 10px; color:var(--accent); }
 p, li { font-family:"Segoe UI", sans-serif; font-size:14.5px; line-height:1.45; }
@@ -26,35 +31,83 @@ ul { margin:0; padding-left:18px; }
 .stat { border-top:1px solid var(--line); padding:10px 0; }
 .stat b { display:block; font-size:26px; font-family:Georgia, serif; }
 .stat span { font-family:"Segoe UI", sans-serif; font-size:12px; color:var(--muted); }
-footer { display:flex; justify-content:space-between; gap:20px; padding:16px 32px 22px; border-top:1px solid var(--line); font-family:"Segoe UI", sans-serif; font-size:14px; }
+.out { font-family:Consolas, monospace; font-size:12.5px; line-height:1.55; background:var(--card); border:1px solid var(--line); padding:10px 12px; margin:0 0 8px; white-space:pre-wrap; }
+.shots { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; padding:8px 22px 18px; border-top:1px solid var(--line); }
+.shots.one { grid-template-columns:1fr; }
+.shots.two { grid-template-columns:1.15fr 1fr; }
+.shots figure { margin:0; background:var(--card); border:1px solid var(--line); }
+.shots img { width:100%; height:190px; object-fit:contain; background:#fff; display:block; }
+.shots.one img { height:280px; }
+.shots figcaption { font-family:"Segoe UI", sans-serif; font-size:12px; color:var(--muted); padding:6px 8px 8px; }
+.next { margin:0; padding:12px 28px 16px; border-top:1px solid var(--line); font-family:"Segoe UI", sans-serif; font-size:13.5px; color:var(--muted); line-height:1.45; }
+.next b { color:var(--ink); font-weight:600; }
+footer { display:flex; justify-content:space-between; gap:20px; padding:16px 28px 22px; border-top:1px solid var(--line); font-family:"Segoe UI", sans-serif; font-size:14px; }
 code { font-family:Consolas, monospace; background:var(--card); border:1px solid var(--line); padding:2px 6px; }
-@media (max-width:800px) { .grid, .band { grid-template-columns:1fr; } section { border-right:0; border-bottom:1px solid var(--line); } header, footer { display:block; } .tags { text-align:left; margin-top:12px; } }
+@media (max-width:800px) {
+  .grid, .band, .path, .shots, .shots.two { grid-template-columns:1fr; }
+  section { border-right:0; border-bottom:1px solid var(--line); }
+  header, footer { display:block; }
+  .tags { text-align:left; margin-top:12px; }
+}
+
 </style>
 </head>
 <body>
 <article class="sheet">
+
   <header>
     <div>
       <p class="kicker">Analysis</p>
       <h1>Fake and Real News</h1>
-      <p class="claim">On this corpus the classes separate by house style. A linear model is already at 99%, so the perfect BERT score is not a general detector.</p>
+      <p class="claim">On this corpus the two sides already write differently. A linear model reaches 99%, so the extra point from BERT is a check, not a new detector.</p>
     </div>
     <div class="tags"><span>44,898 articles</span><span>TF-IDF</span><span>BERT</span></div>
   </header>
+  <ol class="path">
+    <li><b>01 · Guard the label</b><span>The words FAKE and REAL are masked, so the model cannot cheat by reading the tag.</span></li>
+    <li><b>02 · Count words</b><span>Bag of words and TF-IDF, each with a linear classifier.</span></li>
+    <li><b>03 · Check with BERT</b><span>The same split, fine-tuned, to see whether context adds anything.</span></li>
+    <li><b>04 · Look at a decision</b><span>LIME lists the words a linear call actually used.</span></li>
+  </ol>
   <div class="grid">
-    <section><h2>Question</h2><ul><li>Can the writing alone tell a Reuters wire from the fake-news half of this Kaggle set?</li><li>The words FAKE and REAL were masked so the label could not leak through.</li></ul></section>
-    <section><h2>Method</h2><ul><li>Count vectors and TF-IDF with linear classifiers.</li><li>A fine-tuned BERT on the same split.</li><li>LIME for the words a decision used.</li></ul></section>
-    <section><h2>Evidence</h2><div class="stat"><b>99%</b><span>linear models, accuracy and F1</span></div><div class="stat"><b>100%</b><span>BERT on this split</span></div><div class="stat"><b>0.999</b><span>linear ROC-AUC</span></div></section>
+    <section><h2>Question</h2><ul>
+      <li>Can the writing alone separate the two halves of this Kaggle set?</li>
+      <li>The real half is Reuters copy. The other half comes from elsewhere.</li>
+    </ul></section>
+    <section><h2>Why this path</h2><ul>
+      <li>If a word count already separates the sources, a transformer will look brilliant for the wrong reason.</li>
+      <li>Starting simple makes the one-point gap visible.</li>
+    </ul></section>
+    <section><h2>What held</h2>
+      <div class="stat"><b>44,898</b><span>articles, 52% fake, 48% real</span></div>
+      <div class="stat"><b>99%</b><span>accuracy and F1, both linear models</span></div>
+      <div class="stat"><b>0.999</b><span>linear ROC-AUC</span></div>
+    </section>
   </div>
   <div class="band">
-    <section><h2>What the result actually says</h2><ul><li>The corpus is 23,481 fake articles (52.3%) and 21,417 real articles (47.7%). Most pieces are 150–1,500 words, average about 500.</li><li>Count vectors and TF-IDF with linear models both reach 99% accuracy, precision, recall, and F1, and ROC-AUC 0.999.</li><li>The words FAKE and REAL were masked so the label could not leak through the text. LIME shows which remaining words a decision used.</li></ul></section>
-    <section><h2>What it does not show</h2><ul><li>Real articles in this set are Reuters copy. Fake articles come from other sites. The model can win by recognizing house style.</li><li>BERT at 100% on this split is one point above models that were already at 99%. It is not a general misinformation detector.</li></ul></section>
-    <section><h2>Beside the other attempts</h2><ul><li>CountVectorizer plus logistic regression, and TF-IDF plus a linear SVM, tie at 99%.</li><li>Fine-tuned BERT reaches 100% and ROC-AUC 1.0 on the same split. The gap is too small to be the story.</li></ul></section>
+    <section><h2>Reading the result</h2><ul>
+      <li>Most pieces are 150 to 1,500 words, about 500 on average. Length is not the trick. House style is.</li>
+      <li>Count vectors and TF-IDF tie. BERT reaches a perfect score on this split, one point above models that were already done.</li>
+      <li>That is evidence the split is easy to separate, and a reason to be careful calling it a general misinformation detector.</li>
+    </ul></section>
+    <section><h2>A real output</h2>
+      <div class="out">“The central bank raised interest
+rates on Wednesday after officials
+met in the capital.”
+
+predict.py  →  REAL</div>
+    </section>
+    <section><h2>Why BERT was still trained</h2><ul>
+      <li>To test whether word order would change the story. It confirmed the split, and it did not change the conclusion.</li>
+      <li><code>predict.py</code> scores one article with the saved BERT weights.</li>
+    </ul></section>
   </div>
+  <p class="next"><b>Scope.</b> A detector of this corpus’s two writing styles. A new site, with a new style, would need its own check.</p>
   <footer>
-    <div><h2>Stack</h2><p>scikit-learn linear models and a fine-tuned BERT. predict.py scores one article with the saved model. The notebook keeps the comparison.</p></div>
-    <div><h2>Look at it</h2><p>Read the notebook, or run <code>predict.py</code> with the saved model for one article.</p></div>
+    <div><h2>Stack</h2><p>scikit-learn linear models and a fine-tuned BERT. The notebook keeps the comparison.</p></div>
+    <div><h2>Look at it</h2><p>Read the notebook, or run <code>predict.py</code> on one article.</p></div>
   </footer>
+
 </article>
 </body>
 </html>
