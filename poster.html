@@ -8,7 +8,9 @@
 :root { --ink:#1c1915; --muted:#5c564c; --line:#d9d1c3; --paper:#f6f1e7; --card:#fffdf8; --accent:#3F3D56; }
 * { box-sizing:border-box; }
 body { margin:0; background:#e7e1d6; color:var(--ink); font-family:Georgia, "Iowan Old Style", serif; }
-.sheet { max-width:1100px; margin:28px auto; background:var(--paper); border:1px solid var(--line); }
+.sheet { max-width:1180px; margin:28px auto; background:var(--paper); border:1px solid var(--line); }
+.band { display:grid; grid-template-columns:1.25fr 1fr 0.9fr; border-top:1px solid var(--line); }
+.band section { padding-bottom:18px; }
 header { display:flex; justify-content:space-between; gap:24px; padding:28px 32px 18px; border-bottom:3px solid var(--accent); }
 h1 { font-size:34px; line-height:1.05; margin:0 0 8px; letter-spacing:-0.4px; }
 .claim { margin:0; font-family:"Segoe UI", sans-serif; font-size:16px; color:var(--muted); max-width:680px; }
@@ -26,7 +28,7 @@ ul { margin:0; padding-left:18px; }
 .stat span { font-family:"Segoe UI", sans-serif; font-size:12px; color:var(--muted); }
 footer { display:flex; justify-content:space-between; gap:20px; padding:16px 32px 22px; border-top:1px solid var(--line); font-family:"Segoe UI", sans-serif; font-size:14px; }
 code { font-family:Consolas, monospace; background:var(--card); border:1px solid var(--line); padding:2px 6px; }
-@media (max-width:800px) { .grid { grid-template-columns:1fr; } section { border-right:0; border-bottom:1px solid var(--line); } header, footer { display:block; } .tags { text-align:left; margin-top:12px; } }
+@media (max-width:800px) { .grid, .band { grid-template-columns:1fr; } section { border-right:0; border-bottom:1px solid var(--line); } header, footer { display:block; } .tags { text-align:left; margin-top:12px; } }
 </style>
 </head>
 <body>
@@ -44,8 +46,13 @@ code { font-family:Consolas, monospace; background:var(--card); border:1px solid
     <section><h2>Method</h2><ul><li>Count vectors and TF-IDF with linear classifiers.</li><li>A fine-tuned BERT on the same split.</li><li>LIME for the words a decision used.</li></ul></section>
     <section><h2>Evidence</h2><div class="stat"><b>99%</b><span>linear models, accuracy and F1</span></div><div class="stat"><b>100%</b><span>BERT on this split</span></div><div class="stat"><b>0.999</b><span>linear ROC-AUC</span></div></section>
   </div>
+  <div class="band">
+    <section><h2>What the result actually says</h2><ul><li>The corpus is 23,481 fake articles (52.3%) and 21,417 real articles (47.7%). Most pieces are 150–1,500 words, average about 500.</li><li>Count vectors and TF-IDF with linear models both reach 99% accuracy, precision, recall, and F1, and ROC-AUC 0.999.</li><li>The words FAKE and REAL were masked so the label could not leak through the text. LIME shows which remaining words a decision used.</li></ul></section>
+    <section><h2>What it does not show</h2><ul><li>Real articles in this set are Reuters copy. Fake articles come from other sites. The model can win by recognizing house style.</li><li>BERT at 100% on this split is one point above models that were already at 99%. It is not a general misinformation detector.</li></ul></section>
+    <section><h2>Beside the other attempts</h2><ul><li>CountVectorizer plus logistic regression, and TF-IDF plus a linear SVM, tie at 99%.</li><li>Fine-tuned BERT reaches 100% and ROC-AUC 1.0 on the same split. The gap is too small to be the story.</li></ul></section>
+  </div>
   <footer>
-    <div><h2>What came out of it</h2><ul><li>Real copy is Reuters and the fake copy is from other sites, so style is a shortcut.</li><li>These numbers describe this dataset. They do not transfer to open-world misinformation.</li></ul></div>
+    <div><h2>Stack</h2><p>scikit-learn linear models and a fine-tuned BERT. predict.py scores one article with the saved model. The notebook keeps the comparison.</p></div>
     <div><h2>Look at it</h2><p>Read the notebook, or run <code>predict.py</code> with the saved model for one article.</p></div>
   </footer>
 </article>
